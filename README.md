@@ -64,4 +64,3 @@ Ne pas demander ni enregistrer les codes secrets Mobile Money dans la boutique. 
 - Images d’illustration chargées depuis Unsplash
 - Les informations de compte et l’historique client sont enregistrés localement dans le navigateur ; une authentification serveur est nécessaire avant la mise en ligne commerciale
 - Les pages légales et la politique de retour sont des contenus de départ à faire relire et adapter avant publication
-
