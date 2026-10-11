@@ -6,7 +6,7 @@ import { demoProducts, demoPromotions } from './seed.mjs';
 import { createOrder } from './commerce.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(here, 'data');
+const dataDir = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : path.join(here, 'data');
 const distDir = path.resolve(here, '..', 'dist');
 const adminKey = process.env.ADMIN_API_KEY ?? (process.env.NODE_ENV === 'production' ? '' : 'wearo-demo-admin-key');
 let mutationQueue = Promise.resolve();
@@ -253,5 +253,6 @@ const server = http.createServer(async (request, response) => {
 });
 
 const port = Number(process.env.PORT || 4174);
-const host = process.env.HOST || '127.0.0.1';
+const host = process.env.HOST || (process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1');
 server.listen(port, host, () => console.log(`WEARO server: http://${host}:${port}`));
+
