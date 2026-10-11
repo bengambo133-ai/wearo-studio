@@ -48,6 +48,16 @@ Les tests vérifient la création de commandes, la diminution du stock par varia
 - `ADMIN_API_KEY` : une valeur longue et aléatoire, jamais commitée dans le dépôt
 - `PAYMENT_MODE=demo` tant que la passerelle réelle n’a pas été intégrée
 
+### Aperçu public sur Render
+
+Le fichier `render.yaml` prépare un service web Render gratuit, avec construction automatique après connexion du dépôt GitHub privé, contrôle de santé sur `/api/health` et génération d’une clé d’administration. Après connexion du dépôt à Render, créez un Blueprint depuis ce dépôt et vérifiez que le plan sélectionné est bien `free` avant de lancer le service.
+
+Cette configuration sert à prévisualiser le site : l’instance gratuite peut s’arrêter lorsqu’elle est inactive et son système de fichiers n’est pas persistant. Les commandes, messages et changements de stock de démonstration peuvent donc disparaître après un redémarrage. Les paiements restent simulés. Pour vendre réellement, il faudra choisir un hébergement et un stockage persistants, remplacer la clé partagée de l’administration par une authentification avec rôles et intégrer le prestataire de paiement marchand.
+
+### Domaine `wearo.tg`
+
+Le site utilise `https://wearo.tg/` comme URL canonique et ses fichiers SEO (`robots.txt` et `sitemap.xml`) sont prêts pour ce domaine. Pour le rendre accessible sur Internet, il faut d’abord enregistrer le domaine auprès d’un bureau accrédité, puis déployer l’application sur un hébergeur Node.js. Ajoutez ensuite le domaine dans le tableau de bord de cet hébergeur et configurez les enregistrements DNS A/AAAA ou CNAME exactement selon ses instructions. Activez HTTPS sur l’hébergeur avant de communiquer l’adresse. L’aperçu `127.0.0.1` reste uniquement accessible depuis l’ordinateur local.
+
 Le serveur refuse les mutations administrateur sans clé. En production, l’écran d’administration permet de saisir cette clé en mémoire le temps de la session. Pour un vrai lancement public, remplacer cette clé partagée par une authentification administrateur avec sessions sécurisées et rôles, puis remplacer le stockage JSON local par PostgreSQL ou un service managé adapté. Le stockage JSON convient à une démonstration sur un seul processus, pas à plusieurs réplicas ni à une activité soutenue.
 
 ## Mobile Money et données réelles
@@ -64,3 +74,4 @@ Ne pas demander ni enregistrer les codes secrets Mobile Money dans la boutique. 
 - Images d’illustration chargées depuis Unsplash
 - Les informations de compte et l’historique client sont enregistrés localement dans le navigateur ; une authentification serveur est nécessaire avant la mise en ligne commerciale
 - Les pages légales et la politique de retour sont des contenus de départ à faire relire et adapter avant publication
+
